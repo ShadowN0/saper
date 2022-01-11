@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        .tile {
+            height: 60px;
+            width: 60px;
+            display:inline-block;
+        }
+        .img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+        #score_table *{
+            text-align: center;
+        }
+        form *{
+            margin: 0 auto; 
+            text-align: center;
+        }
+        tbody *{
+            text-align: left;
+        }
+        #whole_interface {
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <form id="handleform">
+        <table>
+            <tr>
+                <td><input id="x_input" type="text">podaj szerokość planszy</td>
+            </tr>
+            <tr>
+                <td><input id="y_input" type="text">podaj wysokość planszy</td>
+            </tr>
+            <tr>
+                <td><input id="bombs_input" type="text">podaj ilość bomb</td>
+            </tr>
+            <tr>
+                <td><input type="submit" id='submit_button' value="generate game"></td>
+            </tr>
+        </table>
+    </form>
+
+    <div id="whole_interface">
+        
+        <h1 id="time"></h1>
+        <p style="display:none;" id="time_data"></p>
+        <h2 id="bombs_left"></h2>
+        <div id="game_div">
+            
+        </div>
+        
+    </div>
+    
+    <div id="score_table">
+        <h2>Najlepsze wyniki dla danych trybów:</h2>
+        <div id="top_scores">
+
+        </div>
+    </div>
+    <script src="saper.js"></script>
+</body>
+</html>
