@@ -294,14 +294,10 @@ const board = {
     
                 default: //zero bombs around this tile, need to uncover values on tiles that are also zeroes (have 0 mines around them) 
                     img.setAttribute('src', 'imgs/zero.png')
-                    let around = tile.map_tiles_around()
-                    console.log(around, around[0])
-                    
+                    let around = tile.map_tiles_around()                    
                     
                     for(let obj = 0; obj<around.length; obj++){
-                        console.log("in loop")
                         if(around[obj].bomb == 0 && around[obj].uncovered == 0){
-                            console.log("in if")
                             tile.uncovered = 1
                             board.bomb_control(around[obj])
                         }
@@ -367,8 +363,6 @@ const board = {
             div.append(name)
             
             for(let score = 0; score<data_array.length; score++){
-                console.log(data_array[score][2])
-                console.log(data_array)
                 if(data_array[score][2] == unique_format_array[types]){
                     let vis_score_data = data_array[score]
                     let element = document.createElement('p')
@@ -407,7 +401,6 @@ const board = {
             let value = sec_mili[0]*100 + sec_mili[1]
             correct_order.push(value)
         }
-        console.log(correct_order)
         
         correct_order = correct_order.sort(
             function(a, b){
@@ -435,8 +428,6 @@ const board = {
 
         }
 
-
-        console.log(records, correct_record_order, "chuj")
         return(correct_record_order)
     },
 
