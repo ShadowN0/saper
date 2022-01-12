@@ -142,29 +142,34 @@ const board = {
         let input_x = document.getElementById('x_input').value
         let input_y = document.getElementById('y_input').value
         let input_bombs = document.getElementById('bombs_input').value
-        if(game_div.children.length != 0){
-            for(let child = game_div.children.length-1; child > -1; child--){
-               game_div.children[child].remove()
+        if(input_bombs > 2 || (input_x > 1 && input_y > 1)){
+            if(game_div.children.length != 0){
+                for(let child = game_div.children.length-1; child > -1; child--){
+                game_div.children[child].remove()
+                }
+                try {
+                    clearInterval(clock_tick)
+                }catch{
+                    console.log("the timer was already cleared")
+                }
+                game_div.addEventListener('click', board.check_bomb)
             }
-            try {
-                clearInterval(clock_tick)
-            }catch{
-                console.log("the timer was already cleared")
-            }
-            game_div.addEventListener('click', board.check_bomb)
-        }
         
-        time.textContent = "Time - 00:00"
-        bombs_left_text.textContent = "Bombs left: " + input_bombs
+            time.textContent = "Time - 00:00"
+            bombs_left_text.textContent = "Bombs left: " + input_bombs
     
-        board.initiate(input_x, input_y, input_bombs)
-        //let form = document.getElementById('handleform')
-        //form.parentNode.removeChild(form)
+            board.initiate(input_x, input_y, input_bombs)
+            //let form = document.getElementById('handleform')
+            //form.parentNode.removeChild(form)
 
-        board.generate()
-        board.mine_radar()
-        board.flags_on()
-        console.log(board)
+            board.generate()
+            board.mine_radar()
+            board.flags_on()
+            console.log(board)
+        }
+        else{
+            alert("podaj bardziej sensowne wartości")
+        }
     },
 
     mine_radar : function(){
