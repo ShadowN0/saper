@@ -142,7 +142,7 @@ const board = {
         let input_x = document.getElementById('x_input').value
         let input_y = document.getElementById('y_input').value
         let input_bombs = document.getElementById('bombs_input').value
-        if((input_bombs > 2 || (input_x > 1 && input_y > 1)) && (input_bombs < input_x*input_y)){
+        if((input_bombs > 2 && (input_x > 1 && input_y > 1)) && (input_bombs < input_x*input_y)){
             if(game_div.children.length != 0){
                 for(let child = game_div.children.length-1; child > -1; child--){
                 game_div.children[child].remove()
