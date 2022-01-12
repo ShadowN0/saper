@@ -17,7 +17,7 @@ class TileObj {
             if(this.y+n > -1 && this.y+n < this.col_height){
                 for(let i = -1; i<2; i++){
                     if(this.x+i > -1 && this.x+i < this.row_len){
-                        mines_around += board.tiles[(this.x + i + ((this.y + n)*this.col_height))].bomb
+                        mines_around += board.tiles[(this.x + i + ((this.y + n)*this.row_len))].bomb
                     }
                 }
             }
