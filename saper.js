@@ -370,6 +370,9 @@ const board = {
 
     set_cookie_record : function(){
         alert("Zwycięstwo!")
+        for(let i = 0; i<board.tiles.length; i++){
+            board.tiles[i].uncovered = 1
+        }
 
         //cookie expiration date
         const daysToExpire = new Date(2147483647 * 1000).toUTCString()
