@@ -265,39 +265,66 @@ const board = {
         else{
             switch(tile.mines_around){
                 case 1:
+                    if(tile.flag == 1){
+                        break
+                    }
                     img.setAttribute('src', 'imgs/jeden.png')
                     tile.uncovered = 1
                     break
                 case 2:
+                    if(tile.flag == 1){
+                        break
+                    }
                     img.setAttribute('src', 'imgs/dwa.png')
                     tile.uncovered = 1
                     break
                 case 3:
+                    if(tile.flag == 1){
+                        break
+                    }
                     img.setAttribute('src', 'imgs/trzy.png')
                     tile.uncovered = 1
                     break
                 case 4:
+                    if(tile.flag == 1){
+                        break
+                    }
                     img.setAttribute('src', 'imgs/cztery.png')
                     tile.uncovered = 1
                     break
                 case 5:
+                    if(tile.flag == 1){
+                        break
+                    }
                     img.setAttribute('src', 'imgs/piec.png')
                     tile.uncovered = 1
                     break
                 case 6:
+                    if(tile.flag == 1){
+                        break
+                    }
                     img.setAttribute('src', 'imgs/szesc.png')
                     tile.uncovered = 1
                     break
                 case 7:
+                    if(tile.flag == 1){
+                        break
+                    }
                     img.setAttribute('src', 'imgs/siedem.png')
                     tile.uncovered = 1
                     break
                 case 8:
+                    if(tile.flag == 1){
+                        break
+                    }
                     img.setAttribute('src', 'imgs/osiem.png')
                     tile.uncovered = 1
                     break
     
                 default: //zero bombs around this tile, need to uncover values on tiles that are also zeroes (have 0 mines around them) 
+                    if(tile.flag == 1){
+                        break
+                    }
                     img.setAttribute('src', 'imgs/zero.png')
                     let around = tile.map_tiles_around()                    
                     
