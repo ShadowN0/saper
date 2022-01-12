@@ -37,7 +37,7 @@ class TileObj {
             if(this.y+n > -1 && this.y+n < this.col_height){
                 for(let i = -1; i<2; i++){
                     if(this.x+i > -1 && this.x+i < this.row_len){
-                        tiles_around.push(board.tiles[(this.x + i + ((this.y + n)*this.col_height))])
+                        tiles_around.push(board.tiles[(this.x + i + ((this.y + n)*this.row_len))])
                     }
                 }
             }
