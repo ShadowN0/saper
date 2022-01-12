@@ -270,6 +270,7 @@ const board = {
                     }
                     img.setAttribute('src', 'imgs/jeden.png')
                     tile.uncovered = 1
+                    tile.visible_tile.removeEventListener('contextmenu', board.set_flag)
                     break
                 case 2:
                     if(tile.flag == 1){
@@ -277,6 +278,7 @@ const board = {
                     }
                     img.setAttribute('src', 'imgs/dwa.png')
                     tile.uncovered = 1
+                    tile.visible_tile.removeEventListener('contextmenu', board.set_flag)
                     break
                 case 3:
                     if(tile.flag == 1){
@@ -284,6 +286,7 @@ const board = {
                     }
                     img.setAttribute('src', 'imgs/trzy.png')
                     tile.uncovered = 1
+                    tile.visible_tile.removeEventListener('contextmenu', board.set_flag)
                     break
                 case 4:
                     if(tile.flag == 1){
@@ -291,6 +294,7 @@ const board = {
                     }
                     img.setAttribute('src', 'imgs/cztery.png')
                     tile.uncovered = 1
+                    tile.visible_tile.removeEventListener('contextmenu', board.set_flag)
                     break
                 case 5:
                     if(tile.flag == 1){
@@ -298,6 +302,7 @@ const board = {
                     }
                     img.setAttribute('src', 'imgs/piec.png')
                     tile.uncovered = 1
+                    tile.visible_tile.removeEventListener('contextmenu', board.set_flag)
                     break
                 case 6:
                     if(tile.flag == 1){
@@ -305,6 +310,7 @@ const board = {
                     }
                     img.setAttribute('src', 'imgs/szesc.png')
                     tile.uncovered = 1
+                    tile.visible_tile.removeEventListener('contextmenu', board.set_flag)
                     break
                 case 7:
                     if(tile.flag == 1){
@@ -312,6 +318,7 @@ const board = {
                     }
                     img.setAttribute('src', 'imgs/siedem.png')
                     tile.uncovered = 1
+                    tile.visible_tile.removeEventListener('contextmenu', board.set_flag)
                     break
                 case 8:
                     if(tile.flag == 1){
@@ -319,6 +326,7 @@ const board = {
                     }
                     img.setAttribute('src', 'imgs/osiem.png')
                     tile.uncovered = 1
+                    tile.visible_tile.removeEventListener('contextmenu', board.set_flag)
                     break
     
                 default: //zero bombs around this tile, need to uncover values on tiles that are also zeroes (have 0 mines around them) 
@@ -327,6 +335,7 @@ const board = {
                     }
                     img.setAttribute('src', 'imgs/zero.png')
                     let around = tile.map_tiles_around()                    
+                    tile.visible_tile.removeEventListener('contextmenu', board.set_flag)
                     
                     for(let obj = 0; obj<around.length; obj++){
                         if(around[obj].bomb == 0 && around[obj].uncovered == 0){
@@ -334,10 +343,11 @@ const board = {
                             board.bomb_control(around[obj])
                         }
                     }
+                    
                     break
             }
         }
-        tile.visible_tile.removeEventListener('contextmenu', board.set_flag)
+        
     
         board.check_win_condition()
     },
