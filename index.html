@@ -6,17 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>site - menu</title>
     <style>
+        * {
+            margin:0 auto;
+            padding:0 0 0 0;
+        }
+
+        body {
+            background-color:rgb(33, 117, 89);
+        }
+
         #saper {
             width:200px;
             height:200px;
-            background-color:black;
+            background-image: url(./imgs/saper_icon.png);
         }
-        a {
-            color:aliceblue
+
+        #saper:hover {
+            cursor: pointer;
         }
+
+        #snake {
+            width:200px;
+            height:200px;
+            background-image: url(./imgs/snake_icon.png);
+        }
+
+        #snake:hover {
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
-    <div id='saper'><a href="./saper.html">saper</a></div>
+
+    <div id='saper'>
+                
+    </div>
+
+    <div id='snake'>
+                
+    </div>
+
+    <script>
+        let saper = document.getElementById('saper')
+        let saper_url = './saper/saper.html'
+        saper.onclick = function(){
+            window.location=saper_url
+        }
+
+        let snake = document.getElementById('snake')
+        let snake_url = './snake/snake.html'
+        snake.onclick = function(){
+            window.location=snake_url
+        }
+    </script>
 </body>
 </html>
