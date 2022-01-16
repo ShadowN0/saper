@@ -288,7 +288,7 @@ class Board {
             return false
         }
 
-        if(((future_head_pos%10 == this.snake_head%10 + this.width - 1) || (future_head_pos%10 == this.snake_head%10 - this.width + 1)) && (future_head_pos == this.snake_head+1 || future_head_pos == this.snake_head-1)){
+        if(((future_head_pos%this.width == this.snake_head%this.width + this.width - 1) || (future_head_pos%this.width == this.snake_head%this.width - this.width + 1)) && (future_head_pos == this.snake_head+1 || future_head_pos == this.snake_head-1)){
             console.log(future_head_pos, this.snake_head)
             return false
         }
@@ -306,7 +306,7 @@ class Board {
 let game_div = document.getElementById('game_div')
 
 //create instance of a game
-let board = new Board(10, 10)
+let board = new Board(20, 15)
 console.log(board)
 
 //make array of zeroes and render it to screen
