@@ -109,7 +109,7 @@ class Board {
     }
 
     movement_direction_set(key, _this){
-        if((key == "KeyA" && _this.active_direction == "KeyD") || (key == "KeyD" && _this.active_direction == "KeyA") || (key == "KeyW" && _this.active_direction == "KeyS") || (key == "KeyS" && _this.active_direction == "KeyW")){
+        if(((key == "KeyA" && _this.active_direction == "KeyD") || (key == "KeyD" && _this.active_direction == "KeyA") || (key == "KeyW" && _this.active_direction == "KeyS") || (key == "KeyS" && _this.active_direction == "KeyW")) || _this.snake.length != 1){
             clearInterval(_this.mv_direction_interval)
             alert('zajebałeś mordą w siebie')
             _this.handle_keypress = 0
