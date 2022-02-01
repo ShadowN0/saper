@@ -109,6 +109,17 @@ class Board {
     }
 
     movement_direction_set(key, _this){
+        if(key == _this.active_direction){
+            clearInterval(_this.mv_direction_interval)
+            alert('zajebałeś mordą w siebie')
+            _this.handle_keypress = 0
+            _this.movement_handler = function(){
+                console.log('you lost, stop trying')
+            }
+            _this.stop_apple_spawn = 1 
+            return
+        }
+
         switch(key){
             case 'KeyA':
                 //it's just _this.refresh_and_render_snake(_this, -1) done every 1 second                
