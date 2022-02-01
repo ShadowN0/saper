@@ -6,9 +6,9 @@ class Board {
         this.tiles_on_board = [] // divs that are representation of fields array
         this.snake = []
         this.snake_head = 0
+        this.snake_head_pos_offset = 0
         this.apples = [] //indexes of apples
         this.not_spawned_apples = [] //indexes of not spawned apples
-        this.mv_direction_interval
         this.active_direction
         this.eat  // should be equal to '= this.eat_apple()'
         this.stop_apple_spawn = 0
@@ -101,62 +101,104 @@ class Board {
     }
 
     movement_handler(_this, key){
-        
+
         if(key != _this.active_direction){
-            clearInterval(_this.mv_direction_interval)
             _this.movement_direction_set(key, _this)
         } 
     }
 
     movement_direction_set(key, _this){
-        
 
         switch(key){
             case 'KeyA':
-                //it's just _this.refresh_and_render_snake(_this, -1) done every 1 second                
-                _this.active_direction = 'KeyA'
-                _this.mv_direction_interval = setInterval(_this.refresh_and_render_snake, 200, _this, -1)
-                
+                //it's just _this.refresh_and_render_snake(_this, -1) done every 1 second   
+                _this.snake_head_pos_offset = -1
+
+                if (_this.active_direction == "KeyD" && _this.snake.length != 1){
+                    clearInterval(start_game)
+                    alert('zajebałeś mordą w siebie')
+                    _this.handle_keypress = 0
+                    _this.movement_handler = function(){
+                        console.log('you lost, stop trying')
+                    }
+                    _this.stop_apple_spawn = 1 
+                    return
+                }    
+
+                _this.active_direction = 'KeyA'                          
                 break
 
             case 'KeyS':  
-                //it's just _this.refresh_and_render_snake(_this, _this.width) done every 1 second                
+                //it's just _this.refresh_and_render_snake(_this, _this.width) done every 1 second   
+                _this.snake_head_pos_offset = _this.width
+
+                if (_this.active_direction == "KeyW" && _this.snake.length != 1){
+                    clearInterval(start_game)
+                    alert('zajebałeś mordą w siebie')
+                    _this.handle_keypress = 0
+                    _this.movement_handler = function(){
+                        console.log('you lost, stop trying')
+                    }
+                    _this.stop_apple_spawn = 1 
+                    return
+                }    
+
                 _this.active_direction = 'KeyS'
-                _this.mv_direction_interval = setInterval(_this.refresh_and_render_snake, 200, _this, _this.width)
-       
                 break
 
             case 'KeyD':
-                 //it's just _this.refresh_and_render_snake(_this, 1) done every 1 second                
-                 _this.active_direction = 'KeyD'
-                _this.mv_direction_interval = setInterval(_this.refresh_and_render_snake, 200, _this, 1)
-            
+                //it's just _this.refresh_and_render_snake(_this, 1) done every 1 second         
+                _this.snake_head_pos_offset = 1
+
+                if (_this.active_direction == "KeyA" && _this.snake.length != 1){
+                    clearInterval(start_game)
+                    alert('zajebałeś mordą w siebie')
+                    _this.handle_keypress = 0
+                    _this.movement_handler = function(){
+                        console.log('you lost, stop trying')
+                    }
+                    _this.stop_apple_spawn = 1 
+                    return
+                }
+
+                _this.active_direction = 'KeyD'            
                 break
 
             case 'KeyW':
-                _this.active_direction = 'KeyW'
-                _this.mv_direction_interval = setInterval(_this.refresh_and_render_snake, 200, _this, -_this.width)
+                _this.snake_head_pos_offset = -_this.width 
 
+                if (_this.active_direction == "KeyS" && _this.snake.length != 1){
+                    clearInterval(start_game)
+                    alert('zajebałeś mordą w siebie')
+                    _this.handle_keypress = 0
+                    _this.movement_handler = function(){
+                        console.log('you lost, stop trying')
+                    }
+                    _this.stop_apple_spawn = 1 
+                    return
+                }
+
+                _this.active_direction = 'KeyW'
                 break
                 
                 default:
-                //it's just _this.refresh_and_render_snake(_this, -_this.width) done every 1 second   
-                clearInterval(_this.mv_direction_interval)             
+                //it's just _this.refresh_and_render_snake(_this, -_this.width) done every 1 second             
                 console.log('bruh')
         }
     }
 
-    refresh_and_render_snake(_this, snake_head_pos_offset){
+    refresh_and_render_snake(_this){
 
         _this.eat_apple()
         let new_snake_element = _this.snake_head
+        
         if(_this.eat == true){   
             //push new element to the snake array
             _this.snake.push(new_snake_element)
             
             //offset the new head position and render it on screen
-            if(_this.detect_collision(_this.snake_head + snake_head_pos_offset) == false){
-                clearInterval(_this.mv_direction_interval)
+            if(_this.detect_collision(_this.snake_head + _this.snake_head_pos_offset) == false){
+                clearInterval(start_game)
                 alert('zajebałeś mordą w ścianę')
                 _this.handle_keypress = 0
                 _this.movement_handler = function(){
@@ -166,7 +208,7 @@ class Board {
                 return
             }
 
-            _this.snake_head += snake_head_pos_offset
+            _this.snake_head += _this.snake_head_pos_offset
             _this.render_snake()
             
             //delete last element witout coloring to prevent visual bugs
@@ -176,8 +218,8 @@ class Board {
             //delete last element and decolor it, and then offset new_head, add it to array and color tile of it's index
             _this.refresh_snake()
 
-            if(_this.detect_collision(_this.snake_head + snake_head_pos_offset) == false){
-                clearInterval(_this.mv_direction_interval)
+            if(_this.detect_collision(_this.snake_head + _this.snake_head_pos_offset) == false){
+                clearInterval(start_game)
                 alert('zajebałeś mordą w ścianę')
                 _this.handle_keypress = 0
                 _this.movement_handler = function(){
@@ -187,7 +229,7 @@ class Board {
                 return
             }
 
-            _this.snake_head += snake_head_pos_offset
+            _this.snake_head += _this.snake_head_pos_offset
             _this.render_snake()
         }
     }
@@ -250,7 +292,7 @@ class Board {
             //console.log('apple spawned!')
             let last_tile = _this.not_spawned_apples[_this.not_spawned_apples.length - 1]
             
-            _this.tiles_on_board[last_tile].style.backgroundImage = "url('imgs/apple.png')"
+            _this.tiles_on_board[last_tile].style.backgroundImage = "url('apple.png')"
             _this.not_spawned_apples.pop()
             
         }
@@ -260,32 +302,8 @@ class Board {
 
     }
 
-    // set_collision_with_map(){
-    //     let borders = []
-
-    //     let border_top = []
-    //     let border_bottom = []
-    //     let border_right = []
-    //     let border_left = []
-    //     //top bottom right left
-        
-    //     //append top and bottom rows to borders[]
-    //     for(let row = 0; row < this.width; row++){
-    //         border_top.push(row)
-    //         border_bottom.push(row + (this.height - 1) * this.width)
-    //     }
-        
-    //     for(let col = 0; col < this.height; col++){
-    //         border_left.push(col * this.width)
-    //         border_right.push(col * this.width + this.width - 1)
-    //     }
-
-    //     borders.push(border_top, border_bottom, border_right, border_left)
-    //     this.borders = borders
-    // }
-
     detect_collision(future_head_pos){
-       
+    
         if(future_head_pos >= this.width*this.height  || future_head_pos < 0){
             return false
         }
@@ -316,14 +334,16 @@ board.set_arr_field()
 board.render()
 console.table(board.fields_array)
 
-//sets this.borders
-//board.set_collision_with_map()
 
 //randomize starting position
 board.create_snake_head()
 
 //keypress handler
 board.handle_keypress(board)
+
+//whole movement handler
+let mv_speed = 200
+let start_game = setInterval(board.refresh_and_render_snake, mv_speed, board)
 
 //spawns and renders apple once every x time
 let spawner = setInterval(board.render_apple, 3000, board)
