@@ -292,7 +292,7 @@ class Board {
             //console.log('apple spawned!')
             let last_tile = _this.not_spawned_apples[_this.not_spawned_apples.length - 1]
             
-            _this.tiles_on_board[last_tile].style.backgroundImage = "url('apple.png')"
+            _this.tiles_on_board[last_tile].style.backgroundImage = "url('imgs/apple.png')"
             _this.not_spawned_apples.pop()
             
         }
