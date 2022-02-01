@@ -56,7 +56,7 @@ class Board {
         this.snake.push(position)
 
         let head = this.tiles_on_board[position]
-        head.style.backgroundColor = 'DarkOrange'
+        head.style.backgroundColor = ''
 
     }
     
@@ -76,6 +76,7 @@ class Board {
         //console.log(this.tiles_on_board[this.snake[this.snake.length - 1]])
         //takes the last colored tile, which number is stored in last index of this.snake, and changes it to background color
         this.tiles_on_board[this.snake[this.snake.length - 1]].style.backgroundColor = 'rgb(11, 77, 6)'
+        this.tiles_on_board[this.snake[this.snake.length - 1]].style.backgroundImage = ''
         //removes the last element of snake, because it's no longer a part of it
         this.snake.pop()
     }
@@ -85,8 +86,36 @@ class Board {
 
         //moves snake head to a newer position
         this.snake.unshift(head_pos)
-        this.tiles_on_board[this.snake[0]].style.backgroundImage = ''
-        this.tiles_on_board[this.snake[0]].style.backgroundColor = 'DarkOrange'
+
+        //head
+        switch(this.active_direction){
+            case "KeyA":
+                this.tiles_on_board[this.snake[0]].style.backgroundImage = "url('imgs/snake_head_A.png')"
+                break
+
+            case "KeyS":
+                this.tiles_on_board[this.snake[0]].style.backgroundImage = "url('imgs/snake_head_S.png')"
+                break
+
+            case "KeyD":
+                this.tiles_on_board[this.snake[0]].style.backgroundImage = "url('imgs/snake_head_D.png')"
+                break
+
+            case "KeyW":
+                this.tiles_on_board[this.snake[0]].style.backgroundImage = "url('imgs/snake_head_W.png')"
+                break
+            default:
+                this.tiles_on_board[this.snake[0]].style.backgroundImage = "url('imgs/snake_egg.png')"
+                break
+        }
+        //this.tiles_on_board[this.snake[0]].style.backgroundColor = 'DarkOrange'
+        
+
+        //tail
+        if(this.snake.length > 1){
+            this.tiles_on_board[this.snake[1]].style.backgroundImage = "url('imgs/snake_body.png')"
+            //this.tiles_on_board[this.snake[1]].style.backgroundColor = 'DarkOrange'
+        }
     }
     
     handle_keypress(board){
@@ -342,7 +371,8 @@ board.create_snake_head()
 board.handle_keypress(board)
 
 //whole movement handler
-let mv_speed = 200
+//mv_speed is interval time
+let mv_speed = 150
 let start_game = setInterval(board.refresh_and_render_snake, mv_speed, board)
 
 //spawns and renders apple once every x time
