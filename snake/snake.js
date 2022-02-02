@@ -10,6 +10,7 @@ class Board {
         this.apples = [] //indexes of apples
         this.not_spawned_apples = [] //indexes of not spawned apples
         this.active_direction
+        this.previous_direction
         this.eat  // should be equal to '= this.eat_apple()'
         this.stop_apple_spawn = 0
     }
@@ -141,6 +142,30 @@ class Board {
             this.tiles_on_board[this.snake[1]].style.backgroundImage = "url('imgs/snake_body.png')"
             //this.tiles_on_board[this.snake[1]].style.backgroundColor = 'DarkOrange'
         }
+
+        this.set_corners()
+    }
+
+    set_corners(){
+        if(this.snake.length >= 4 && !(this.snake[0] - this.snake[2] == 2 || this.snake[0] - this.snake[2] == -2 || this.snake[0] - this.snake[2] == 2*this.width || this.snake[0] - this.snake[2] == -2*this.width)){
+
+            if((this.previous_direction == "KeyA" && this.active_direction == "KeyW") || (this.previous_direction == "KeyS" && this.active_direction == "KeyD")){
+                this.tiles_on_board[this.snake[1]].style.backgroundImage = "url('imgs/snake_corner_AW.png')"
+                this.previous_direction = ''
+            }
+            else if((this.previous_direction == "KeyW" && this.active_direction == "KeyD") || (this.previous_direction == "KeyA" && this.active_direction == "KeyS")){
+                this.tiles_on_board[this.snake[1]].style.backgroundImage = "url('imgs/snake_corner_WD.png')"
+                this.previous_direction = ''
+            }
+            else if((this.previous_direction == "KeyD" && this.active_direction == "KeyS") || (this.previous_direction == "KeyW" && this.active_direction == "KeyA")){
+                this.tiles_on_board[this.snake[1]].style.backgroundImage = "url('imgs/snake_corner_DS.png')"
+                this.previous_direction = ''
+            }
+            else if((this.previous_direction == "KeyS" && this.active_direction == "KeyA") || (this.previous_direction == "KeyD" && this.active_direction == "KeyW")){
+                this.tiles_on_board[this.snake[1]].style.backgroundImage = "url('imgs/snake_corner_SA.png')"
+                this.previous_direction = ''
+            }
+        }
     }
     
     handle_keypress(board){
@@ -150,7 +175,7 @@ class Board {
             //console.log(key)
             
             //this handles all of the movement and inputs
-            _this.movement_handler(_this, key)
+            _this.movement_handler(_this, key)   
         })
     }
 
@@ -162,15 +187,20 @@ class Board {
     }
 
     movement_direction_set(key, _this){
+        _this.previous_direction = _this.active_direction
 
         switch(key){
             case 'KeyA':
+                if(_this.previous_direction == "KeyA"){
+                    _this.previous_direction = ''
+                }
+
                 //it's just _this.refresh_and_render_snake(_this, -1) done every 1 second   
                 _this.snake_head_pos_offset = -1
 
                 if (_this.active_direction == "KeyD" && _this.snake.length != 1){
                     clearInterval(start_game)
-                    alert('zajebałeś mordą w siebie')
+                    alert('gryzienie siebie jest niehumanitarne')
                     _this.handle_keypress = 0
                     _this.movement_handler = function(){
                         console.log('you lost, stop trying')
@@ -178,17 +208,21 @@ class Board {
                     _this.stop_apple_spawn = 1 
                     return
                 }    
-
+                
                 _this.active_direction = 'KeyA'                          
                 break
 
             case 'KeyS':  
+                if(_this.previous_direction == "KeyS"){
+                    _this.previous_direction = ''
+                }
+
                 //it's just _this.refresh_and_render_snake(_this, _this.width) done every 1 second   
                 _this.snake_head_pos_offset = _this.width
 
                 if (_this.active_direction == "KeyW" && _this.snake.length != 1){
                     clearInterval(start_game)
-                    alert('zajebałeś mordą w siebie')
+                    alert('gryzienie siebie jest niehumanitarne')
                     _this.handle_keypress = 0
                     _this.movement_handler = function(){
                         console.log('you lost, stop trying')
@@ -201,12 +235,16 @@ class Board {
                 break
 
             case 'KeyD':
+                if(_this.previous_direction == "KeyD"){
+                    _this.previous_direction = ''
+                }
+
                 //it's just _this.refresh_and_render_snake(_this, 1) done every 1 second         
                 _this.snake_head_pos_offset = 1
 
                 if (_this.active_direction == "KeyA" && _this.snake.length != 1){
                     clearInterval(start_game)
-                    alert('zajebałeś mordą w siebie')
+                    alert('gryzienie siebie jest niehumanitarne')
                     _this.handle_keypress = 0
                     _this.movement_handler = function(){
                         console.log('you lost, stop trying')
@@ -219,11 +257,15 @@ class Board {
                 break
 
             case 'KeyW':
+                if(_this.previous_direction == "KeyW"){
+                    _this.previous_direction = ''
+                }
+
                 _this.snake_head_pos_offset = -_this.width 
 
                 if (_this.active_direction == "KeyS" && _this.snake.length != 1){
                     clearInterval(start_game)
-                    alert('zajebałeś mordą w siebie')
+                    alert('gryzienie siebie jest niehumanitarne')
                     _this.handle_keypress = 0
                     _this.movement_handler = function(){
                         console.log('you lost, stop trying')
@@ -242,6 +284,17 @@ class Board {
     }
 
     refresh_and_render_snake(_this){
+        
+        if(_this.snake.length == _this.tiles_on_board.length){
+            alert("wielkość twojego węża jest imponująca, wygrałeś!")
+            clearInterval(start_game)
+            _this.handle_keypress = 0
+            _this.movement_handler = function(){
+                console.log('you already won, stop it, get some help')
+            }
+            _this.stop_apple_spawn = 1 
+            return 
+        }
 
         _this.eat_apple()
         let new_snake_element = _this.snake_head
@@ -253,7 +306,7 @@ class Board {
             //offset the new head position and render it on screen
             if(_this.detect_collision(_this.snake_head + _this.snake_head_pos_offset) == false){
                 clearInterval(start_game)
-                alert('zajebałeś mordą w ścianę')
+                alert('bicie głową w ścianę nie rozwiązuje problemu, przemyśl to zdanie')
                 _this.handle_keypress = 0
                 _this.movement_handler = function(){
                     console.log('you lost, stop trying')
@@ -274,7 +327,7 @@ class Board {
 
             if(_this.detect_collision(_this.snake_head + _this.snake_head_pos_offset) == false){
                 clearInterval(start_game)
-                alert('zajebałeś mordą w ścianę')
+                alert('bicie głową w ścianę nie rozwiązuje problemu, przemyśl to zdanie')
                 _this.handle_keypress = 0
                 _this.movement_handler = function(){
                     console.log('you lost, stop trying')
@@ -402,3 +455,4 @@ let start_game = setInterval(board.refresh_and_render_snake, mv_speed, board)
 
 //spawns and renders apple once every x time
 let spawner = setInterval(board.render_apple, 3000, board)
+
