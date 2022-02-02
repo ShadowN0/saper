@@ -110,6 +110,31 @@ class Board {
         }
         //this.tiles_on_board[this.snake[0]].style.backgroundColor = 'DarkOrange'
         
+        if(this.snake.length > 2){
+            let tail_direction = this.snake[this.snake.length-1]-this.snake[this.snake.length-2]
+
+            switch(tail_direction){
+                case 1:
+                    this.tiles_on_board[this.snake[this.snake.length-1]].style.backgroundImage = "url('imgs/snake_tail_A.png')"
+                    break
+    
+                case -1:
+                    this.tiles_on_board[this.snake[this.snake.length-1]].style.backgroundImage = "url('imgs/snake_tail_D.png')"
+                    break
+    
+                case this.width:
+                    this.tiles_on_board[this.snake[this.snake.length-1]].style.backgroundImage = "url('imgs/snake_tail_W.png')"
+                    break
+    
+                case -this.width:
+                    this.tiles_on_board[this.snake[this.snake.length-1]].style.backgroundImage = "url('imgs/snake_tail_S.png')"
+                    break
+
+                default:
+                    console.log('something went really OOF')
+                    break
+            }
+        }
 
         //tail
         if(this.snake.length > 1){
