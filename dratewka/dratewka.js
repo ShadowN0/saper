@@ -939,9 +939,6 @@ let play_audio = new Audio("./img/muzyka.mp3")
 play_audio.play()
 
 window.addEventListener('click', start)
-//map.init_game()
-console.log(locations.length)
-console.log(map.location_list)
 
 
 function start(){
