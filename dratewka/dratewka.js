@@ -735,7 +735,7 @@ map = {
             slider.textContent = "YOU WON!"
 
             let x = Math.random() * window.innerWidth * 0.9
-            let y = Math.random() * window.innerHeight 
+            let y = Math.random() * window.innerHeight * 0.95
             
             slider.style.top = `${y}px`
             slider.style.left = `${x}px`
