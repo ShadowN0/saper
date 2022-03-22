@@ -675,9 +675,6 @@ map = {
                 window.addEventListener('keydown', map.wait_for_key)
             }, 300)
         }
-        else {
-            map.timeout_dots("there is no such a command\nto check what you can type in or do: VOCABULARY (V) or GOSSIPS (G)\n")
-        }
         
     },
 
@@ -896,6 +893,9 @@ map = {
             else{
                 informations.textContent = "You can't go that way (south)"
             }
+        }
+        else {
+            map.timeout_dots("there is no such a command\nto check what you can type in or do: VOCABULARY (V) or GOSSIPS (G)\n")
         }
     },
 
