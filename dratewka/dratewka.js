@@ -27,6 +27,8 @@ map = {
     sheep_items_used: 0,
     dragon_killed: 0,
     V_or_G_on: 0,
+    correct: 0,
+    correct_dir: 0,
 
     init_game: function(){
         game_div.style.visibility = "visible"
@@ -360,10 +362,12 @@ map = {
         console.log(this.current_location_object.items.length)
 
         if((map.command.includes("drop ") || (map.command[0] == "D" && map.command[1] == " ") || map.command.includes("DROP ")) && this.current_location_object.items.length >= 3){
+            map.correct = 0
             map.timeout_dots("There are already too many items on the ground\n")
         }
         else if(map.command.includes("drop ") || (map.command[0] == "D" && map.command[1] == " ") || map.command.includes("DROP ")){
-            
+            map.correct = 0
+
             let item_name
             if(map.command[0] == "D" && map.command[1] == " "){
                 item_name = map.command.substring(2, map.command.length)
@@ -399,10 +403,12 @@ map = {
             }
         }
         else if((map.command.includes("take ") || (map.command[0] == "T" && map.command[1] == " ") || map.command.includes("TAKE ")) && player.items.length == 1){
+            map.correct = 0
             map.timeout_dots("You can't carry more items\n")
         }
         else if(map.command.includes("take ") || (map.command[0] == "T" && map.command[1] == " ") || map.command.includes("TAKE ")){
-           
+            map.correct = 0
+
             let item_name
             if(map.command[0] == "T" && map.command[1] == " "){
                 item_name = map.command.substring(2, map.command.length)
@@ -443,6 +449,8 @@ map = {
         }
 
         else if(map.command.includes("use ") || (map.command[0] == "U" && map.command[1] == " ") || map.command.includes("USE ")){
+            map.correct = 0
+            
             let item_name = map.command.substring(4, map.command.length)
             item_name = item_name.trim()
 
@@ -631,6 +639,8 @@ map = {
             
         }
         else if((map.command[0] == "V" && map.command[1] == " ") || map.command.includes("VOCABULARY")){
+            map.correct = 0
+            
             map.V_or_G_on = 1
 
             let additional_info = document.getElementById('additional_info')
@@ -653,6 +663,8 @@ map = {
             }, 300)           
         }
         else if((map.command[0] == "G" && map.command[1] == " ") || map.command.includes("GOSSIPS")){
+            map.correct = 0
+            
             map.V_or_G_on = 1
 
             let additional_info = document.getElementById('additional_info')
@@ -674,8 +686,10 @@ map = {
             window.setTimeout(function(){
                 window.addEventListener('keydown', map.wait_for_key)
             }, 300)
-        }
-        
+        }    
+        else{
+            map.correct = 1
+        }    
     },
 
     timeout_dots: function(text){
@@ -754,6 +768,8 @@ map = {
 
     map_movement_handler: function(){
         if(this.command == "east" || this.command == "e"){
+            map.correct_dir = 0
+
             if(player.x < 7 && (this.check_directions_available() == true)){
                 
                 //informations.textContent = "You are going east..."
@@ -785,6 +801,7 @@ map = {
         }
 
         else if(this.command == "west" || this.command == "w"){
+            map.correct_dir = 0
             console.log(this.check_directions_available())
 
             if(player.x > 1  && (this.check_directions_available() == true)){
@@ -831,6 +848,8 @@ map = {
         }
 
         else if(this.command == "north" || this.command == "n"){
+            map.correct_dir = 0
+
             if(player.y > 1 && (this.check_directions_available() == true)){
                 
                 let what_now = document.getElementById('what_now')
@@ -861,6 +880,8 @@ map = {
         }
 
         else if(this.command == "south" || this.command == "s"){
+            map.correct_dir = 0
+
             if(player.y < 6 && (this.check_directions_available() == true)){
                 if(!((player.y+1 == 5 || player.y+1 == 6) && player.x < 4)){
                     
@@ -894,7 +915,11 @@ map = {
                 informations.textContent = "You can't go that way (south)"
             }
         }
-        else {
+        else{
+            map.correct_dir = 1
+        }
+
+        if(map.correct == 1 && map.correct_dir == 1){
             map.timeout_dots("there is no such a command\nto check what you can type in or do: VOCABULARY (V) or GOSSIPS (G)\n")
         }
     },

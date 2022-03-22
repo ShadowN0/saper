@@ -13,7 +13,7 @@ locations = [
         color: "rgb(89, 93, 87)",
         x: 2,
         y: 1,
-        directions: ["east"]
+        directions: ["east", "west"]
     },
     {
         description: "A hill",
@@ -21,7 +21,7 @@ locations = [
         color: "rgb(117, 237, 243)",
         x: 3,
         y: 1,
-        directions: ["east", "south"]
+        directions: ["east", "south", "west"]
     },
     {
         description: "Some bushes", 
