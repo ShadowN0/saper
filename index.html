@@ -35,6 +35,16 @@
             cursor: pointer;
         }
 
+        #dratewka {
+            width:200px;
+            height:200px;
+            background-image: url(./dratewka/img/title_screen.jpg);
+        }
+
+        #dratewka:hover {
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -44,6 +54,10 @@
     </div>
 
     <div id='snake'>
+                
+    </div>
+
+    <div id='dratewka'>
                 
     </div>
 
@@ -58,6 +72,12 @@
         let snake_url = './snake/snake.html'
         snake.onclick = function(){
             window.location=snake_url
+        }
+
+        let dratewka = document.getElementById('snake')
+        let dratewka_url = './dratewka/dratewka.html'
+        snake.onclick = function(){
+            window.location=dratewka_url
         }
     </script>
 </body>
