@@ -614,13 +614,18 @@ map = {
                 result_item = this.return_item_of_given_id(36)
 
                 player.items.shift()
-                this.current_location_object.items.push(result_item)
+                player.items.push(result_item)
+                
                 map.timeout_dots("The King is impressed by your shoes\n")
-
+            }
+            else if(player.items[0].id == 36){
+                player.items.shift()
+                
                 window.setTimeout(function(){
                     map.ending_screen()
                 }, 1600)
             }
+            
             
             else{
                 informations.innerText = "nothing happened...\n"
