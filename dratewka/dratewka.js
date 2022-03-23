@@ -607,7 +607,7 @@ map = {
                 result_item = this.return_item_of_given_id(35)
 
                 player.items.shift()
-                this.current_location_object.items.push(result_item)
+                player.items.push(result_item)
                 map.timeout_dots("You used your tools to make shoes\n")
             }
             else if(location_number == 21 && player.items[0].id == 35){
@@ -618,7 +618,7 @@ map = {
                 map.timeout_dots("The King is impressed by your shoes\n")
 
                 window.setTimeout(function(){
-                    this.ending_screen()
+                    map.ending_screen()
                 }, 1600)
             }
             
